@@ -13,7 +13,6 @@ crouton_Handlebars.registerHelper("startup", function() {
         }
     }
 });
-crouton_Handlebars.registerHelper('selectFormatPopup', function() {return "formatPopup2";});
 crouton_Handlebars.registerPartial(
     "SayHello",
     "{{getWord 'hello'}} {{this.meeting_name}}"
