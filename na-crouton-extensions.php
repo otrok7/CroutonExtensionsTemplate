@@ -2,13 +2,12 @@
 /**
 Plugin Name: NA Crouton Extensions
 Plugin URI: none
-Description: Extentions to Crouton for German site
+Description: Template for extending crouton by adding Helpers and Partials to Handlebars
 Version: 0.1.0
 */
 class na_handebars {
     function __construct(){
         add_action("wp_enqueue_scripts", array(&$this, "enqueue_frontend_files"));	
-        add_action("wp_body_open", array(&$this, "configureJS"));	
     }
     function enqueue_frontend_files() {
         if ($this->hasShortcode()) {
@@ -18,11 +17,8 @@ class na_handebars {
         }
     }
     var $has_shortcode;
-    var $shortcode_tested = false;
     function hasShortcode()
     {
-        if ($this->shortcode_tested) return $this->has_shortcode;
-        $this->shortcode_tested = true;
         $this->has_shortcode = false;
         $post_to_check = get_post(get_the_ID());
         $post_content = $post_to_check->post_content ?? '';
@@ -34,14 +30,6 @@ class na_handebars {
             $this->has_shortcode = true;
         }
         return $this->has_shortcode;
-    }
-    function configureJS() {
-        if ($this->hasShortcode()) {
-            $ret = '<script type="text/javascript">';
-            $ret .= "var c_g_CroutonExtension_flags = '".plugin_dir_url(__FILE__)."crouton-extensions-lang/';" . (defined('_DEBUG_MODE_') ? "\n" : '');
-            $ret .= '</script>';
-            echo $ret;
-        }
     }
 }
 new na_handebars();
